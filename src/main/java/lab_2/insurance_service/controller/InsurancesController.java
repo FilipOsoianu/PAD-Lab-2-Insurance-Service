@@ -22,7 +22,9 @@ public class InsurancesController {
 
 
     @GetMapping("/insurances")
-    ResponseEntity<List<Insurance>> getInsurancesByUsersId(@RequestParam(required = false) Integer userId) {
+    ResponseEntity<List<Insurance>> getInsurancesByUsersId(@RequestHeader() String transactionId , @RequestParam(required = false) Integer userId) {
+        logger.info("Request received:" + transactionId );
+
         List<Insurance> insuranceList;
         if (userId != null) {
             insuranceList = insuranceRepository.findInsuranceByUserId(userId);
@@ -36,7 +38,9 @@ public class InsurancesController {
     }
 
     @GetMapping("/insurances/{id}")
-    ResponseEntity<Insurance> getInsuranceById(@PathVariable Integer id) {
+    ResponseEntity<Insurance> getInsuranceById(@RequestHeader() String transactionId , @PathVariable Integer id) {
+        logger.info("Request received:" + transactionId );
+
         Insurance insurance = insuranceRepository.findInsuranceById(id);
         if (insurance == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -45,13 +49,16 @@ public class InsurancesController {
     }
 
     @PostMapping("/insurances")
-    ResponseEntity<Insurance> createInsurance(@RequestBody Insurance newInsurance) {
+    ResponseEntity<Insurance> createInsurance(@RequestHeader() String transactionId , @RequestBody Insurance newInsurance) {
+        logger.info("Request received:" + transactionId );
+
         Insurance insurance = insuranceRepository.save(newInsurance);
         return new ResponseEntity<>(insurance, HttpStatus.CREATED);
     }
 
     @PutMapping("/insurances/{id}")
-    ResponseEntity<Insurance> updateInsurance(@RequestBody Insurance updatedInsurance, @PathVariable Integer id) {
+    ResponseEntity<Insurance> updateInsurance(@RequestHeader() String transactionId , @RequestBody Insurance updatedInsurance, @PathVariable Integer id) {
+        logger.info("Request received:" + transactionId );
         Insurance insurance = insuranceRepository.findInsuranceById(id);
         if (insurance == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -65,7 +72,9 @@ public class InsurancesController {
     }
 
     @DeleteMapping("/insurances/{id}")
-    ResponseEntity<?> deleteInsurance(@PathVariable Integer id) {
+    ResponseEntity<?> deleteInsurance(@RequestHeader() String transactionId , @PathVariable Integer id) {
+        logger.info("Request received:" + transactionId );
+
         insuranceRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
