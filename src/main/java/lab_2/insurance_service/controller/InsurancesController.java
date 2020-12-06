@@ -49,8 +49,8 @@ public class InsurancesController {
     }
 
     @PostMapping("/insurances")
-    ResponseEntity<Insurance> createInsurance(@RequestHeader() String transactionId , @RequestBody Insurance newInsurance) {
-        logger.info("Request received:" + transactionId );
+    ResponseEntity<Insurance> createInsurance( @RequestBody Insurance newInsurance) {
+        logger.info("Request received:"  );
 
         Insurance insurance = insuranceRepository.save(newInsurance);
         return new ResponseEntity<>(insurance, HttpStatus.CREATED);
@@ -72,8 +72,7 @@ public class InsurancesController {
     }
 
     @DeleteMapping("/insurances/{id}")
-    ResponseEntity<?> deleteInsurance(@RequestHeader() String transactionId , @PathVariable Integer id) {
-        logger.info("Request received:" + transactionId );
+    ResponseEntity<?> deleteInsurance( @PathVariable Integer id) {
 
         insuranceRepository.deleteById(id);
         return ResponseEntity.noContent().build();

@@ -2,15 +2,13 @@
 <Configuration status="DEBUG">
 
     <Appenders>
-
-        <Socket name="Socket" host="localhost" port="9201">
+        <Socket name="Socket" host="${bundle:application:logging.conf.host}" port="${bundle:application:logging.conf.port}">
             <JsonLayout properties="true"/>
         </Socket>
 
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-
     </Appenders>
     <Loggers>
         <Root level="INFO">
