@@ -2,7 +2,7 @@
 <Configuration status="DEBUG">
 
     <Appenders>
-        <Socket name="Socket" host="${bundle:application:logging.conf.host}" port="${bundle:application:logging.conf.port}">
+        <Socket name="Socket" host="${env:logging.conf.host}" port="${env:logging.conf.port}">
             <JsonLayout properties="true"/>
         </Socket>
 
